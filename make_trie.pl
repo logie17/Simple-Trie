@@ -22,7 +22,7 @@ sub add_to {
 
 sub _add_node {
     my $node = $TRIE;
-    my @letters = (shift) =~ /./g;
+    my @letters = split "", shift;
     # walk the trie
     while ( scalar @letters && exists($node->{$letters[0]}) ) {
         $node = $node->{shift(@letters)};       
@@ -36,8 +36,29 @@ sub _add_node {
 sub find {
     my $word = shift;
     my $node = $TRIE;
-    $node = $node->{$_} for $word =~ /./g;
+    $node = $node->{$_} for split "", $word;
     return exists $node->{_END()} ? 1 : 0;
+}
+
+sub _find_all {
+    my ($prefix, $node, $found) = @_;
+    push @$found, $prefix if exists $node->{_END()};
+    _find_all($prefix . $_, $node->{$_}, $found) for keys %$node;
+}
+
+sub smart_find {
+    my $prefix = shift;
+    my @letters = split "", $prefix;
+    my $node = $TRIE;
+
+    $node = $node->{$_} for @letters;    
+
+    if ($node) {
+        my @found;
+        _find_all($prefix, $node, \@found);                
+        return @found;
+    }
+    return;
 }
 
 # TODO, interesting prototype make_trie { split /./, shift } @words;
@@ -52,4 +73,7 @@ ok ! find('baz');
 add_to('baz');
 ok find('baz');
 
+add_to('foe');
+my @results = smart_find('f');
+is_deeply [sort @results], ['foe', 'foo', 'food' ];
 done_testing;
