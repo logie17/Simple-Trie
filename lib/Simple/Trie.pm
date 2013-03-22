@@ -2,6 +2,8 @@ package Simple::Trie;
 use Moo;
 use constant '_END' => '';
 
+# ABSTRACT: Trie, it's simple
+
 has words => (
     is => 'rw',
     initializer => 'words',
