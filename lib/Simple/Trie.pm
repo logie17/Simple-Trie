@@ -60,9 +60,48 @@ sub _find_all {
 
 sub _make_trie {
     my ($self, $words) = @_;
-    for my $word ( @$words ) {
-        $self->_add_node($word);
-    }
+    $self->_add_node($_) for @$words;
 }
+
+=head1 SYNOPSIS
+
+  $trie = Simple::Trie->new(words => [ qw(foo bar food) ] );
+
+  $trie->add('baz');
+  say "Found foo" if $trie->find('foo');
+  my @results = $trie->smart_find('f');
+
+=head1 DESCRIPTION
+
+  This is an implementation of a Trie, but it's not very sophisticated. This was done
+  as a way for myself to become more aquainted with the algorithm described here
+
+  http://en.wikipedia.org/wiki/Trie
+
+=head1 ATTRIBUTES
+
+=head2 words
+
+The current set of words during initializion.
+
+=head1 METHODS
+
+=head2 add($word)
+
+Will add a word to the trie.
+
+=head2 find($word)
+
+Will return true if the word is found in the trie.
+
+=head2 smart_find($letters)
+
+Will return a list of found words that match.
+
+=head1 SEE ALSO
+
+L<Moo> 
+
+=cut
 
 1;
