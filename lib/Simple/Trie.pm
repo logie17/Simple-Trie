@@ -11,7 +11,7 @@ has words => (
     coerce => sub { ref $_[0] eq 'ARRAY' ? $_[0] : [split(/\s/,$_[0])] }
 );
 
-has _trie => ( is => 'rw', default => sub {{}} ); 
+has _trie => ( is => 'rw', default => sub {{}} );
 
 sub add { (shift)->_add_node(@_) }
 
@@ -27,11 +27,11 @@ sub smart_find {
     my @letters = split "", $prefix;
     my $node = $self->_trie;
 
-    $node = $node->{$_} for @letters;    
+    $node = $node->{$_} for @letters;
 
     if ($node) {
         my @found;
-        $self->_find_all($prefix, $node, \@found);                
+        $self->_find_all($prefix, $node, \@found);
         return @found;
     }
     return;
@@ -44,7 +44,7 @@ sub _add_node {
 
     my @letters = split "", $word;
     while ( scalar @letters && exists($node->{$letters[0]}) ) {
-        $node = $node->{shift(@letters)};       
+        $node = $node->{shift(@letters)};
     }
     for my $letter (@letters) {
         $node = $node->{$letter} = {};

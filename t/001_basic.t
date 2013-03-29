@@ -16,7 +16,7 @@ is_deeply $test->_trie, { 'b' => { 'l' => { 'a' => { 'h' => { '' => undef } } } 
 
 $test = Simple::Trie->new(words => [ qw(foo bar food) ] );
 
-is_deeply $test->_trie, {'b' => { 'a' => { 'r' => { '' => undef }}}, 'f' => { 'o' => { 'o' => { '' => undef, 'd' => { '' => undef }}}}}; 
+is_deeply $test->_trie, {'b' => { 'a' => { 'r' => { '' => undef }}}, 'f' => { 'o' => { 'o' => { '' => undef, 'd' => { '' => undef }}}}};
 ok $test->find('foo');
 ok !$test->find ('unknown');
 
