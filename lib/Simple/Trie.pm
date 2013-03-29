@@ -100,7 +100,7 @@ Will return a list of found words that match.
 
 =head1 SEE ALSO
 
-L<Moo> 
+L<Moo>
 
 =cut
 
